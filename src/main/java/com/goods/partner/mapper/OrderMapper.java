@@ -6,6 +6,7 @@ import com.goods.partner.dto.ProductDto;
 import com.goods.partner.entity.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,8 @@ public class OrderMapper {
         Address address = order.getAddress();
         Client client = address.getClient();
 
+        //LocalDate date = order.getDate();
+
         Manager manager = order.getManager();
 
         List<ProductDto> products = mapProducts(order.getOrderedProducts());
@@ -35,7 +38,10 @@ public class OrderMapper {
         OrderDto orderDto = new OrderDto();
         orderDto.setOrderId(order.getId());
         orderDto.setOrderNumber(order.getNumber());
+
+        orderDto.setCreatedDate(order.getDate());
         orderDto.setOrderData(orderData);
+
         return orderDto;
     }
 

@@ -44,132 +44,11 @@ public class RoutesControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("given Routes when Calculate Routers then Correct Json Returned")
-    @DataSet(value = "common/dataset_routes.yml",
-            disableConstraints = true)
-    void givenRoutes_whenCalculateRouters_thenCorrectJsonReturned() throws Exception {
-
-        mockMvc.perform(get("/calculate/routes")
-                        .param("date", "2022-07-12")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
-
-                .andExpect(status().isOk())
-                .andExpect(content()
-                        .json("{" +
-                                "  \"date\": \"2022-07-12\"," +
-                                "  \"routes\": [" +
-                                "    {" +
-                                "      \"routeId\": 1," +
-                                "      \"status\": \"new\"," +
-                                "      \"totalWeight\": 100.0," +
-                                "      \"totalPoints\": 5," +
-                                "      \"totalOrders\": 10," +
-                                "      \"distance\": 50.0," +
-                                "      \"estimatedTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                "      \"startTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                "      \"finishTime\": \"-999999999-01-01T00:00:00\"," +
-                                "      \"spentTime\": \"-999999999-01-01T00:00:00\"," +
-                                "      \"routeLink\": \"http//\"," +
-                                "      \"storeName\": \"storeName1\"," +
-                                "      \"storeAddress\": \"Київ\"," +
-                                "      \"clients\": [" +
-                                "        {" +
-                                "          \"clientId\": 2," +
-                                "          \"clientName\": \"ТОВ Кондитерська\"," +
-                                "          \"addresses\": [" +
-                                "            {" +
-                                "              \"address\": \"м. Київ, вул. Хрещатик, 1\"," +
-                                "              \"orders\": [" +
-                                "                {" +
-                                "                  \"orderId\": 6," +
-                                "                  \"orderNumber\": 356325," +
-                                "                  \"orderTotalWeight\": 59.32000000000001" +
-                                "                }" +
-                                "              ]," +
-                                "              \"addressTotalWeight\": 59.32000000000001" +
-                                "            }" +
-                                "          ]" +
-                                "        }" +
-                                "      ]" +
-                                "    }," +
-                                "    {" +
-                                "      \"routeId\": 2," +
-                                "      \"status\": \"in progress\"," +
-                                "      \"totalWeight\": 200.0," +
-                                "      \"totalPoints\": 5," +
-                                "      \"totalOrders\": 10," +
-                                "      \"distance\": 50.0," +
-                                "      \"estimatedTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                "      \"startTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                "      \"finishTime\": \"-999999999-01-01T00:00:00\"," +
-                                "      \"spentTime\": \"-999999999-01-01T00:00:00\"," +
-                                "      \"routeLink\": \"http//\"," +
-                                "      \"storeName\": \"storeName2\"," +
-                                "      \"storeAddress\": \"Фастів\"," +
-                                "      \"clients\": [" +
-                                "      {" +
-                                "          \"clientId\": 2," +
-                                "          \"clientName\": \"ТОВ Кондитерська\"," +
-                                "          \"addresses\": [" +
-                                "            {" +
-                                "              \"address\": \"м. Київ, вул. Хрещатик, 1\"," +
-                                "              \"orders\": [" +
-                                "                {" +
-                                "                  \"orderId\": 6," +
-                                "                  \"orderNumber\": 356325," +
-                                "                  \"orderTotalWeight\": 59.32000000000001" +
-                                "                }" +
-                                "              ]," +
-                                "              \"addressTotalWeight\": 59.32000000000001" +
-                                "            }" +
-                                "          ]" +
-                                "        }" +
-                                "      ]" +
-                                "    }," +
-                                "    {" +
-                                "      \"routeId\": 3," +
-                                "      \"status\": \"finished\"," +
-                                "      \"totalWeight\": 300.0," +
-                                "      \"totalPoints\": 5," +
-                                "      \"totalOrders\": 10," +
-                                "      \"distance\": 50.0," +
-                                "      \"estimatedTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                "      \"startTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                "      \"finishTime\": \"-999999999-01-01T00:00:00\"," +
-                                "      \"spentTime\": \"-999999999-01-01T00:00:00\"," +
-                                "      \"routeLink\": \"http//\"," +
-                                "      \"storeName\": \"storeName3\"," +
-                                "      \"storeAddress\": \"Одеса\"," +
-                                "      \"clients\": [" +
-                                "        {" +
-                                "          \"clientId\": 2," +
-                                "          \"clientName\": \"ТОВ Кондитерська\"," +
-                                "          \"addresses\": [" +
-                                "            {" +
-                                "              \"address\": \"м. Київ, вул. Хрещатик, 1\"," +
-                                "              \"orders\": [" +
-                                "                {" +
-                                "                  \"orderId\": 6," +
-                                "                  \"orderNumber\": 356325," +
-                                "                  \"orderTotalWeight\": 59.32000000000001" +
-                                "                }" +
-                                "              ]," +
-                                "              \"addressTotalWeight\": 59.32000000000001" +
-                                "            }" +
-                                "          ]" +
-                                "        }" +
-                                "      ]" +
-                                "    }" +
-                                "  ]" +
-                                "}"));
-    }
-
-    @Test
-    @DisplayName("given Routes when Calculate Routers then Incorrect Json Returned")
+    @DisplayName("given Routes when Calculate Routers then Json Returned")
     @DataSet(value = "common/dataset.yml",
             disableConstraints = true)
-    void givenRoutes_whenCalculateRouters_thenIncorrectJsonReturned() throws Exception {
+    void givenRoutes_whenCalculateRouters_thenJsonReturned() throws Exception {
+
         mockMvc.perform(get("/calculate/routes")
                         .param("date", "2022-07-12")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -177,158 +56,40 @@ public class RoutesControllerIntegrationTest {
 
                 .andExpect(status().isOk())
                 .andExpect(content()
-                        .json(
-                                "{" +
-                                        "  \"date\": \"2022-07-12\"," +
-                                        "  \"routes\": [" +
-                                        "    {" +
-                                        "      \"routeId\": 1," +
-                                        "      \"status\": \"new\"," +
-                                        "      \"totalWeight\": 100.0," +
-                                        "      \"totalPoints\": 5," +
-                                        "      \"totalOrders\": 10," +
-                                        "      \"distance\": 50.0," +
-                                        "      \"estimatedTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                        "      \"startTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                        "      \"finishTime\": \"-999999999-01-01T00:00:00\"," +
-                                        "      \"spentTime\": \"-999999999-01-01T00:00:00\"," +
-                                        "      \"routeLink\": \"http//\"," +
-                                        "      \"storeName\": \"storeName1\"," +
-                                        "      \"storeAddress\": \"Київ\"," +
-                                        "      \"clients\": [" +
-                                        "        {" +
-                                        "          \"clientId\": 2," +
-                                        "          \"clientName\": \"ТОВ Кондитерська\"," +
-                                        "          \"addresses\": [" +
-                                        "            {" +
-                                        "              \"address\": \"м. Київ, вул. Хрещатик, 1\"," +
-                                        "              \"orders\": [" +
-                                        "                {" +
-                                        "                  \"orderId\": 6," +
-                                        "                  \"orderNumber\": 356325," +
-                                        "                  \"orderTotalWeight\": 59.32000000000001" +
-                                        "                }," +
-                                        "                {" +
-                                        "                  \"orderId\": 5," +
-                                        "                  \"orderNumber\": 432565," +
-                                        "                  \"orderTotalWeight\": 338.28" +
-                                        "                }," +
-                                        "                {" +
-                                        "                  \"orderId\": 4," +
-                                        "                  \"orderNumber\": 97342," +
-                                        "                  \"orderTotalWeight\": 5.5" +
-                                        "                }," +
-                                        "                {" +
-                                        "                  \"orderId\": 3," +
-                                        "                  \"orderNumber\": 45463," +
-                                        "                  \"orderTotalWeight\": 620.55" +
-                                        "                }" +
-                                        "              ]," +
-                                        "              \"addressTotalWeight\": 1023.65" +
-                                        "            }" +
-                                        "          ]" +
-                                        "        }" +
-                                        "      ]" +
-                                        "    }," +
-                                        "    {" +
-                                        "      \"routeId\": 2," +
-                                        "      \"status\": \"in progress\"," +
-                                        "      \"totalWeight\": 200.0," +
-                                        "      \"totalPoints\": 5," +
-                                        "      \"totalOrders\": 10," +
-                                        "      \"distance\": 50.0," +
-                                        "      \"estimatedTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                        "      \"startTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                        "      \"finishTime\": \"-999999999-01-01T00:00:00\"," +
-                                        "      \"spentTime\": \"-999999999-01-01T00:00:00\"," +
-                                        "      \"routeLink\": \"http//\"," +
-                                        "      \"storeName\": \"storeName2\"," +
-                                        "      \"storeAddress\": \"Фастів\"," +
-                                        "      \"clients\": [" +
-                                        "          {" +
-                                        "          \"clientId\": 2," +
-                                        "          \"clientName\": \"ТОВ Кондитерська\"," +
-                                        "          \"addresses\": [" +
-                                        "            {" +
-                                        "              \"address\": \"м. Київ, вул. Хрещатик, 1\"," +
-                                        "              \"orders\": [" +
-                                        "                {" +
-                                        "                  \"orderId\": 6," +
-                                        "                  \"orderNumber\": 356325," +
-                                        "                  \"orderTotalWeight\": 59.32000000000001" +
-                                        "                }," +
-                                        "                {" +
-                                        "                  \"orderId\": 5," +
-                                        "                  \"orderNumber\": 432565," +
-                                        "                  \"orderTotalWeight\": 338.28" +
-                                        "                }," +
-                                        "                {" +
-                                        "                  \"orderId\": 4," +
-                                        "                  \"orderNumber\": 97342," +
-                                        "                  \"orderTotalWeight\": 5.5" +
-                                        "                }," +
-                                        "                {" +
-                                        "                  \"orderId\": 3," +
-                                        "                  \"orderNumber\": 45463," +
-                                        "                  \"orderTotalWeight\": 620.55" +
-                                        "                }" +
-                                        "              ]," +
-                                        "              \"addressTotalWeight\": 1023.65" +
-                                        "            }" +
-                                        "          ]" +
-                                        "        }" +
-                                        "      ]" +
-                                        "    }," +
-                                        "    {" +
-                                        "      \"routeId\": 3," +
-                                        "      \"status\": \"finished\"," +
-                                        "      \"totalWeight\": 300.0," +
-                                        "      \"totalPoints\": 5," +
-                                        "      \"totalOrders\": 10," +
-                                        "      \"distance\": 50.0," +
-                                        "      \"estimatedTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                        "      \"startTime\": \"+999999999-12-31T23:59:59.999999999\"," +
-                                        "      \"finishTime\": \"-999999999-01-01T00:00:00\"," +
-                                        "      \"spentTime\": \"-999999999-01-01T00:00:00\"," +
-                                        "      \"routeLink\": \"http//\"," +
-                                        "      \"storeName\": \"storeName3\"," +
-                                        "      \"storeAddress\": \"Одеса\"," +
-                                        "      \"clients\": [" +
-                                        "          {" +
-                                        "          \"clientId\": 2," +
-                                        "          \"clientName\": \"ТОВ Кондитерська\"," +
-                                        "          \"addresses\": [" +
-                                        "            {" +
-                                        "              \"address\": \"м. Київ, вул. Хрещатик, 1\"," +
-                                        "              \"orders\": [" +
-                                        "                {" +
-                                        "                  \"orderId\": 6," +
-                                        "                  \"orderNumber\": 356325," +
-                                        "                  \"orderTotalWeight\": 59.32000000000001" +
-                                        "                }," +
-                                        "                {" +
-                                        "                  \"orderId\": 5," +
-                                        "                  \"orderNumber\": 432565," +
-                                        "                  \"orderTotalWeight\": 338.28" +
-                                        "                }," +
-                                        "                {" +
-                                        "                  \"orderId\": 4," +
-                                        "                  \"orderNumber\": 97342," +
-                                        "                  \"orderTotalWeight\": 5.5" +
-                                        "                }," +
-                                        "                {" +
-                                        "                  \"orderId\": 3," +
-                                        "                  \"orderNumber\": 45463," +
-                                        "                  \"orderTotalWeight\": 620.55" +
-                                        "                }" +
-                                        "              ]," +
-                                        "              \"addressTotalWeight\": 1023.65" +
-                                        "            }" +
-                                        "          ]" +
-                                        "        }" +
-                                        "      ]" +
-                                        "    }" +
-                                        "  ]" +
-                                        "}"));
+                        .json("""
+                                {"date": "2022-07-12",
+                                  "routes": [
+                                    {
+                                      "routeId": "1",
+                                      "status": "new",
+                                      "totalWeight": "100.0",
+                                      "totalPoints": "5",
+                                      "totalOrders": "10",
+                                      "distance": "50.0",
+                                      "estimatedTime": "+999999999-12-31T23:59:59.999999999",
+                                      "startTime": "+999999999-12-31T23:59:59.999999999",
+                                      "finishTime": "-999999999-01-01T00:00:00",
+                                      "spentTime": "-999999999-01-01T00:00:00",
+                                      "routeLink": "http//",
+                                      "storeName": "storeName1",
+                                      "storeAddress": "Київ",
+                                      "routePoints": [
+                                        {
+                                          "clientId": "2",
+                                          "clientName": "ТОВ Кондитерська",
+                                          "address": "м. Київ, вул. Хрещатик, 1",
+                                          "addressTotalWeight": "59.32000000000001",
+                                          "orders": [
+                                            {
+                                              "orderId": "6",
+                                              "orderNumber": "356325",
+                                              "orderTotalWeight": "59.32000000000001"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }"""));
     }
 }

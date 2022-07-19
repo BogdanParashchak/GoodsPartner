@@ -51,6 +51,7 @@ data
 flyway.conf
 
 application-dev.yml
+application-dev.properties
 
 # misc
 .DS_Store

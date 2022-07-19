@@ -12,4 +12,4 @@ spring:
       prefix: /build/
 google:
   api:
-    key: AIzaSyCR-lGFeoRbT_wBRtX3cqb6doKR_CvUCII
+    key: ${GOOGLE_API_KEY}

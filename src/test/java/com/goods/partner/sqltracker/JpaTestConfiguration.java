@@ -5,28 +5,45 @@ import net.ttddyy.dsproxy.listener.DataSourceQueryCountListener;
 import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
 import net.ttddyy.dsproxy.listener.logging.SLF4JQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
 
 @Configuration
+@EnableAutoConfiguration
+@ComponentScan(basePackages = {"com.goods.partner"},
+        excludeFilters = @ComponentScan.Filter(type = FilterType.ASPECTJ, pattern = "com.goods.partner.web"))
 public class JpaTestConfiguration {
-    @Bean
-    public String testDataSource(DataSource dataSource) {
-//        ChainListener listener = new ChainListener();
-//        SLF4JQueryLoggingListener loggingListener = new SLF4JQueryLoggingListener();
-//        loggingListener.setQueryLogEntryCreator(new DefaultQueryLogEntryCreator());
-//        listener.addListener(loggingListener);
-//        listener.addListener(new DataSourceQueryCountListener());
-//        return ProxyDataSourceBuilder
-//                .create(dataSource)
-//                .name("test")
-//                .listener(loggingListener)
-//                .build();
+    @Autowired
+    Environment env;
 
-        return "";
+    @Bean
+    public DataSource dataSource() {
+        return DataSourceBuilder.create()
+                .driverClassName(env.getProperty("spring.datasource.driver-class-name"))
+                .url(env.getProperty("spring.datasource.url"))
+                .username(env.getProperty("spring.datasource.username"))
+                .password(env.getProperty("spring.datasource.password"))
+                .build();
+    }
+
+    @Bean
+    @Primary
+    public DataSource testDataSource() {
+        ChainListener listener = new ChainListener();
+        SLF4JQueryLoggingListener loggingListener = new SLF4JQueryLoggingListener();
+        loggingListener.setQueryLogEntryCreator(new DefaultQueryLogEntryCreator());
+        listener.addListener(loggingListener);
+        listener.addListener(new DataSourceQueryCountListener());
+        return ProxyDataSourceBuilder
+                .create(dataSource())
+                .name("test")
+                .listener(listener)
+                .build();
     }
 }

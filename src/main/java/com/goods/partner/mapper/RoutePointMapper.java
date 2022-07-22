@@ -8,6 +8,8 @@ import com.goods.partner.entity.OrderedProduct;
 import com.google.common.annotations.VisibleForTesting;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +50,7 @@ public class RoutePointMapper {
     @VisibleForTesting
     AddressOrderDto mapOrderAddress(Order order) {
         List<OrderedProduct> orderedProducts = order.getOrderedProducts();
-        double orderTotalWeight = orderedProducts.stream()
-                .map(orderedProduct -> orderedProduct.getCount() * orderedProduct.getProduct().getKg())
-                .collect(Collectors.summarizingDouble(amount -> amount)).getSum();
+        double orderTotalWeight = getOrderTotalWeight(orderedProducts);
 
         AddressOrderDto addressOrderDto = new AddressOrderDto();
         addressOrderDto.setOrderId(order.getId());
@@ -58,5 +58,13 @@ public class RoutePointMapper {
         addressOrderDto.setOrderTotalWeight(orderTotalWeight);
 
         return addressOrderDto;
+    }
+
+    @VisibleForTesting
+    double getOrderTotalWeight(List<OrderedProduct> orderedProducts) {
+        return BigDecimal.valueOf(orderedProducts.stream()
+                        .map(orderedProduct -> orderedProduct.getCount() * orderedProduct.getProduct().getKg())
+                        .collect(Collectors.summarizingDouble(amount -> amount)).getSum())
+                .setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 }

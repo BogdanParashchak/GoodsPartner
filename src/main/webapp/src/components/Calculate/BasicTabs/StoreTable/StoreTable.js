@@ -33,26 +33,27 @@ function StoreTable({date, stores}) {
                           </TableHead>
                           <TableBody>
                             {stores.map((store) => (<>
-                                  {isStorePrinted=false}
+                                  {isStorePrinted = false}
                                   {store.orders.map(order =>
                                       <>
                                         <TableRow
                                             key={store.storeName}
                                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                         >
-                                        {
-                                          isStorePrinted===false &&
-                                          <TableCell rowSpan={store.orders.length} sx={{padding: '7px'}} component="th" scope="row">
-                                            {store.storeName}
-                                          </TableCell>
-                                        }
+                                          {
+                                            isStorePrinted === false &&
+                                            <TableCell rowSpan={store.orders.length} sx={{padding: '7px'}} component="th"
+                                                       scope="row">
+                                              {store.storeName}
+                                            </TableCell>
+                                          }
                                           <TableCell sx={{padding: '7px'}} component="th" scope="row" align="right">
                                             {order.orderNumber}
                                           </TableCell>
                                           <TableCell sx={{padding: '7px'}} component="th" scope="row" align="right">
                                             {order.totalOrderWeight}
                                           </TableCell>
-                                          {isStorePrinted=true}
+                                          {isStorePrinted = true}
                                         </TableRow>
                                       </>
                                   )}

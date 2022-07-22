@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -91,14 +93,16 @@ public class RouteServiceImpl implements RouteService {
     }
 
     private double getRouteOrdersTotalWeight(List<RoutePointDto> routePoints) {
-        return routePoints.stream()
+        return BigDecimal.valueOf(routePoints.stream()
                 .map(RoutePointDto::getAddressTotalWeight)
-                .collect(Collectors.summarizingDouble(amount -> amount)).getSum();
+                .collect(Collectors.summarizingDouble(amount -> amount)).getSum())
+                .setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     private double getRouteTotalDistance(DirectionsRoute route) {
-        return Arrays.stream(route.legs).toList().stream()
-                .collect(Collectors.summarizingLong(leg -> leg.distance.inMeters)).getSum() / 1000d;
+        return BigDecimal.valueOf(Arrays.stream(route.legs).toList().stream()
+                .collect(Collectors.summarizingLong(leg -> leg.distance.inMeters)).getSum() / 1000d)
+                .setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     private long getRouteTotalTime(DirectionsRoute route) {

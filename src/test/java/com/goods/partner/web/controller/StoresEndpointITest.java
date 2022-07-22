@@ -2,13 +2,12 @@ package com.goods.partner.web.controller;
 
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.spring.api.DBRider;
-import com.goods.partner.AbstractBaseTest;
+import com.goods.partner.AbstractBaseITest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -16,9 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DBRider
-@ActiveProfiles("test")
 @AutoConfigureMockMvc
-public class StoresEndpointIntegrationTest extends AbstractBaseTest {
+public class StoresEndpointITest extends AbstractBaseITest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,9 +35,11 @@ public class StoresEndpointIntegrationTest extends AbstractBaseTest {
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .json(
-                                "{\"date\":\"2022-07-12\",\"stores\":" +
-                                        "[{\"storeId\":1,\"storeName\":\"Склад №1\",\"orders\":" +
-                                        "[{\"orderId\":6,\"orderNumber\":356325,\"totalOrderWeight\":59.32}]}]}"));
+                                """
+                                        {\"date\":\"2022-07-12\",\"stores\":
+                                        [{\"storeId\":1,\"storeName\":\"Склад №1\",\"orders\":
+                                        [{\"orderId\":6,\"orderNumber\":356325,\"totalOrderWeight\":59.32}]}]}
+                                        """));
     }
 
     @Test

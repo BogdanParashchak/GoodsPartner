@@ -23,7 +23,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class OrderServiceImpl implements OrderService {
+public class DefaultOrderService implements OrderService {
 
     private final OrderRepository orderRepository;
     private final ClientRepository clientRepository;

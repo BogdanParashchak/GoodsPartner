@@ -1,4 +1,4 @@
-package com.goods.partner.sqltracker;
+package com.goods.partner.orderservice;
 
 import net.ttddyy.dsproxy.listener.ChainListener;
 import net.ttddyy.dsproxy.listener.DataSourceQueryCountListener;
@@ -6,23 +6,21 @@ import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
 import net.ttddyy.dsproxy.listener.logging.SLF4JQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
-@Configuration
-@EnableAutoConfiguration
+@TestConfiguration
 @ComponentScan(basePackages = {"com.goods.partner"})
-public class TestConfiguration {
+public class TestConfigurationToCountAllQueries {
 
     @Autowired
-    Environment env;
+    private Environment env;
 
     @Bean
     public DataSource dataSource() {
